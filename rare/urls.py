@@ -26,6 +26,8 @@ from rareapi.views.categories import CategoryView
 from rareapi.views.posts import PostView
 from rareapi.views.users import UserView
 from rareapi.views.comments import Comment
+from rareapi.views.auth import register_user, check_user
+
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'categories', CategoryView, 'category')
@@ -36,4 +38,6 @@ router.register(r'comments', Comment, 'comment')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('register', register_user),
+    path('checkuser', check_user),
 ]
