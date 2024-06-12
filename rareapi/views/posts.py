@@ -5,6 +5,7 @@ from rest_framework import serializers, status
 
 from rareapi.models.category import Category
 from rareapi.models.post import Post
+# from rareapi.models.user import User
 
 class PostSerializer(serializers.ModelSerializer):
 
@@ -29,7 +30,7 @@ class PostView(ViewSet):
 
     # def create(self, request):
     #   category = Category.objects.get(pk=request.data['category'])
-    #   rare_user = User.objects.get(uid=request.data['rare_user'])
+    #   rare_user = User.objects.get(uid=request.data['user_id'])
       
     #   post = Post.objects.create(rare_user=rare_user, category=category, title=request.data['title'], publication_date=request.data['publication_date'])
     #   serializer = PostSerializer(post)
