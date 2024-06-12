@@ -1,0 +1,15 @@
+[
+  {
+    "model": "rareapi.user",
+    "pk": 1,
+    "fields": {
+      "first_name": 1,
+      "last_name": 1,
+      "bio": "USER BIO",
+      "profile_image_url": "test",
+      "email": "test@email.com",
+      "created_on": "1212-12-12",
+      "uid": "sa2k"
+    }
+  }
+]
