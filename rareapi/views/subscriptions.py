@@ -25,8 +25,8 @@ class SubscriptionView(ViewSet):
   
   def create(self, request):
     """Handle POST requests to create a subscription"""
-    follower_id = User.objects.get(pk=request.data['followerId'])
-    author_id = User.objects.get(uid=request.data['authorId'])
+    follower_id = User.objects.get(pk=request.data['follower_id'])
+    author_id = User.objects.get(uid=request.data['author_id'])
     
     subscription = Subscription.objects.create(
       follower_id = follower_id,
