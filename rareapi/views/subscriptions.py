@@ -18,15 +18,15 @@ class SubscriptionView(ViewSet):
       return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
     
   def list(self, request):
-    """Hand GET requests to get a list of all subscriptions"""
+    """Handle GET requests to get a list of all subscriptions"""
     subscriptions = Subscription.objects.all()
     serializer = SubscriptionSerializer(subscriptions, many=True)
-    return Response(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
   
   def create(self, request):
     """Handle POST requests to create a subscription"""
-    follower_id = User.objects.get(pk=request.data['follower'])
-    author_id = User.objects.get(uid=request.data['author'])
+    follower_id = User.objects.get(pk=request.data['followerId'])
+    author_id = User.objects.get(uid=request.data['authorId'])
     
     subscription = Subscription.objects.create(
       follower_id = follower_id,
@@ -35,8 +35,14 @@ class SubscriptionView(ViewSet):
       ended_on = request.data['ended_on'],
     )
     serializer = SubscriptionSerializer(subscription)
-    return Response(serializer.data)    
-  
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+  def destroy(self, request, pk):
+    """Handle DELETE request for a subscription"""
+    subscription = Subscription.objects.get(pk=pk)
+    subscription.delete()
+    return Response(None, status=status.HTTP_204_NO_CONTENT)
+
 class SubscriptionSerializer(serializers.ModelSerializer):
   """JSON serializer for subscriptions"""
   class Meta:
