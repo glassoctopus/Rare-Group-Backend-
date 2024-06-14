@@ -5,13 +5,14 @@ from rest_framework import serializers, status
 
 from rareapi.models.category import Category
 from rareapi.models.post import Post
+from rareapi.models.user import User
 # from rareapi.models.user import User
 
 class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('id', 'rare_user', 'category', 'title', 'publication_date', )
+        fields = ('id', 'rare_user', 'category', 'title', 'content', 'publication_date', 'approved')
         depth = 2 
 
 class PostView(ViewSet):
@@ -28,24 +29,26 @@ class PostView(ViewSet):
       serializer = PostSerializer(posts, many=True)
       return Response(serializer.data, status=status.HTTP_200_OK)
 
-    # def create(self, request):
-    #   category = Category.objects.get(pk=request.data['category'])
-    #   rare_user = User.objects.get(uid=request.data['user_id'])
+    def create(self, request):
+      category = Category.objects.get(pk=request.data['category'])
+      rare_user = User.objects.get(id=request.data['rare_user'])
       
-    #   post = Post.objects.create(rare_user=rare_user, category=category, title=request.data['title'], publication_date=request.data['publication_date'])
-    #   serializer = PostSerializer(post)
-    #   return Response(serializer.data)
+      post = Post.objects.create(rare_user=rare_user, category=category, title=request.data['title'], approved=request.data['approved'], publication_date=request.data['publication_date'], content=request.data['content'])
+      serializer = PostSerializer(post)
+      return Response(serializer.data)
 
-    # def update(self, request, pk):
-    #   post = Post.objects.get(pk=pk)
-    #   post.title = request.data['title'] 
-    #   post.publication_date = request.data['date']
+    def update(self, request, pk):
+      post = Post.objects.get(pk=pk)
+      post.title = request.data['title'] 
+      post.publication_date = request.data['date']
+      post.content = request.data['content']
+      post.approved = request.data['approved']
       
-    #   category = Category.objects.get(pk=request.data['category'])
-    #   post.category = category
-    #   rare_user = User.objects.get(pk=request.data['rare_user'])
-    #   post.rare_user = rare_user
-    #   post.save()
+      category = Category.objects.get(pk=request.data['category'])
+      post.category = category
+      rare_user = User.objects.get(pk=request.data['rare_user'])
+      post.rare_user = rare_user
+      post.save()
       
     def destroy(self, request, pk):
       post = Post.objects.get(pk=pk)
