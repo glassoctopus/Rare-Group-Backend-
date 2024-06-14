@@ -39,7 +39,7 @@ def register_user(request):
     '''
 
     # Now save the user info in the levelupapi_user table
-    user = user.objects.create(
+    user = User.objects.create(
         bio=request.data['bio'],
         uid=request.data['uid']
     )
