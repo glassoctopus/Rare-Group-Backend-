@@ -6,7 +6,9 @@
       "rare_user": 1,
       "category": 1,
       "title": "Hi",
-      "publication_date": "1212-12-12"
+      "publication_date": "1212-12-12",
+      "content": "This is my content",
+      "approved": true
     }
   },
   {
@@ -16,7 +18,9 @@
       "rare_user": 1,
       "category": 2,
       "title": "Howdy",
-      "publication_date": "2023-01-01"
+      "publication_date": "2023-01-01",
+      "content": "This is my post",
+      "approved": true
     }
   }
 ]

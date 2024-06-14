@@ -7,3 +7,5 @@ class Post(models.Model):
   category = models.ForeignKey(Category, on_delete=models.CASCADE)
   title = models.CharField(max_length=55)
   publication_date = models.DateTimeField(auto_now_add=True)
+  content = models.CharField(max_length=500, default='')
+  approved = models.BooleanField(default=True)
