@@ -36,7 +36,7 @@ router.register(r'users', UserView, 'user')
 router.register(r'comments', CommentView, 'comment')
 router.register(r'subscriptions', SubscriptionView, 'subscription')
 router.register(r'reactions', ReactionView, 'reaction')
-router.register(r'post_reactions', PostReactionView, 'post_reaction')
+router.register(r'postreactions', PostReactionView, 'post_reaction')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
