@@ -15,7 +15,7 @@ class ReactionView(ViewSet):
         except Reaction.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
         
-    def list(self, request, pk):
+    def list(self, request):
             reactions = Reaction.objects.all()
             serializer = ReactionSerializer(reactions, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
