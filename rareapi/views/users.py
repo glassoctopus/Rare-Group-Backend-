@@ -4,6 +4,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from rareapi.models import User
+from django.utils import timezone
 
 class UserSerializer(serializers.ModelSerializer):
     
@@ -11,6 +12,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('first_name', 'last_name', 'bio', 'profile_image_url', 'email', 'created_on', 'active', 'is_staff', 'uid')
 
+def get_current_date_formatted():
+    """helper time/date stamp"""
+    current_date = timezone.now().date()
+    return current_date.strftime('%Y-%m-%d')
 class UserView(ViewSet):
     """User View for simple social full stack app"""
     
@@ -33,8 +38,8 @@ class UserView(ViewSet):
             last_name=request.data["last_name"],
             bio=request.data["bio"],
             profile_image_url=request.data["profile_image_url"],
-            created_on=request.data["created_on"],
-            is_staff=request.data["is_staff"],
+            created_on=get_current_date_formatted(),
+            is_staff=False,
             uid=request.data["uid"],
         )
         
