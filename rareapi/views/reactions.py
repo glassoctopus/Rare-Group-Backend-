@@ -16,19 +16,15 @@ class ReactionView(ViewSet):
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
         
     def list(self, request, pk):
-        
-        try:
-            reaction = Reaction.objects.get(pk=pk)
-            serializer = ReactionSerializer(reaction)
-            return Response(serializer.data)
-        except Reaction.DoesNotExist as ex:
-            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+            reactions = Reaction.objects.all()
+            serializer = ReactionSerializer(reactions, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
     
     def create(self, request):
 
         reaction = Reaction.objects.create(
             label=request.data["label"],
-            image_url=request.data["image"],
+            image_url=request.data["image_url"],
         )
         serializer = ReactionSerializer(reaction)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
