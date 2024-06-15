@@ -9,3 +9,4 @@ class Post(models.Model):
   publication_date = models.DateTimeField(auto_now_add=True)
   content = models.CharField(max_length=500, default='')
   approved = models.BooleanField(default=True)
+  image_url = models.CharField(max_length=200, default='')

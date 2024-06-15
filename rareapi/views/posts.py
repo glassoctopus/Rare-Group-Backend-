@@ -12,7 +12,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('id', 'rare_user', 'category', 'title', 'content', 'publication_date', 'approved')
+        fields = ('id', 'rare_user', 'category', 'title', 'content', 'publication_date', 'approved', 'image_url')
         depth = 2 
 
 class PostView(ViewSet):
@@ -33,7 +33,7 @@ class PostView(ViewSet):
       category = Category.objects.get(pk=request.data['category'])
       rare_user = User.objects.get(id=request.data['rare_user'])
       
-      post = Post.objects.create(rare_user=rare_user, category=category, title=request.data['title'], approved=request.data['approved'], publication_date=request.data['publication_date'], content=request.data['content'])
+      post = Post.objects.create(rare_user=rare_user, category=category, title=request.data['title'], approved=request.data['approved'], publication_date=request.data['publication_date'], image_url=request.data["imageUrl"], content=request.data['content'])
       serializer = PostSerializer(post)
       return Response(serializer.data)
 
@@ -43,6 +43,7 @@ class PostView(ViewSet):
       post.publication_date = request.data['date']
       post.content = request.data['content']
       post.approved = request.data['approved']
+      image_url=request.data["imageUrl"]
       
       category = Category.objects.get(pk=request.data['category'])
       post.category = category
