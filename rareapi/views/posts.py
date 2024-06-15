@@ -31,9 +31,15 @@ class PostView(ViewSet):
 
     def create(self, request):
       category = Category.objects.get(pk=request.data['category'])
-      rare_user = User.objects.get(id=request.data['rare_user'])
+      rare_user = User.objects.get(id=request.data['rareUser'])
       
-      post = Post.objects.create(rare_user=rare_user, category=category, title=request.data['title'], approved=request.data['approved'], publication_date=request.data['publication_date'], image_url=request.data['imageUrl'], content=request.data['content'])
+      post = Post.objects.create(
+        rare_user=rare_user, 
+        category=category, 
+        title=request.data['title'], 
+        publication_date=request.data['publication_date'], 
+        image_url=request.data['imageUrl'], 
+        content=request.data['content'])
       serializer = PostSerializer(post)
       return Response(serializer.data)
 
