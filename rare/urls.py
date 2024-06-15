@@ -25,6 +25,8 @@ from rareapi.views.users import UserView
 from rareapi.views.comments import CommentView
 from rareapi.views import SubscriptionView
 from rareapi.views.auth import register_user, check_user
+from rareapi.views import ReactionView, PostReactionView
+
 
 
 router = routers.DefaultRouter(trailing_slash=False)
@@ -33,6 +35,8 @@ router.register(r'posts', PostView, 'post')
 router.register(r'users', UserView, 'user')
 router.register(r'comments', CommentView, 'comment')
 router.register(r'subscriptions', SubscriptionView, 'subscription')
+router.register(r'reactions', ReactionView, 'reaction')
+router.register(r'post_reactions', PostReactionView, 'post_reaction')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

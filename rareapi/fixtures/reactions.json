@@ -1,0 +1,10 @@
+[
+    {
+      "model": "rareapi.reaction",
+      "pk": 1,
+      "fields": {
+        "label": "check",
+        "image_url": "https://compote.slate.com/images/3aa099dc-ef02-48a7-a179-f8c9be5da3f4.jpeg?crop=1560%2C1040%2Cx0%2Cy0&width=1440"
+      }
+    }
+]
