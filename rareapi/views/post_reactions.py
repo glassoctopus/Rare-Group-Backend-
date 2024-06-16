@@ -20,13 +20,11 @@ class PostReactionView(ViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def create(self, request):
-        user = User.objects.get(pk=request.data['user_id'])
-        post = Post.objects.get(pk=request.data['post_id'])
-        reaction = Reaction.objects.get(pk=request.data['reaction_id'])
+        reaction = Reaction.objects.get(pk=request.data["reaction_id"])
+        rare_user = User.objects.get(pk=request.data['rare_user_id'])
 
         post_reaction = PostReaction.objects.create(
-            user=user,
-            post=post,
+            rare_user=rare_user, 
             reaction=reaction
         )
 
@@ -42,5 +40,5 @@ class PostReactionView(ViewSet):
 class PostReactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostReaction
-        fields = ('id', 'user', 'post_id', 'reaction_id')
-        depth = 2
+        fields = ('id', 'rare_user', 'reaction')
+        depth = 1
