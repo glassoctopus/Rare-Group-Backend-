@@ -1,0 +1,2 @@
+DELETE FROM rareapi_user WHERE ID BETWEEN 5 AND 6;
+
