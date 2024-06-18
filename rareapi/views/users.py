@@ -39,6 +39,7 @@ class UserView(ViewSet):
             bio=request.data["bio"],
             profile_image_url=request.data["profile_image_url"],
             created_on=get_current_date_formatted(),
+            email=request.data["email"],
             is_staff=False,
             uid=request.data["uid"],
         )
@@ -55,6 +56,7 @@ class UserView(ViewSet):
         user.bio = request.data["bio"]
         user.profile_image_url = request.data["profile_image_url"]
         user.is_staff=request.data["is_staff"]
+        user.email=request.data["email"]
         user.save()
         
         serializer = UserSerializer(user)
