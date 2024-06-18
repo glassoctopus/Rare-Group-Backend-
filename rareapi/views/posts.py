@@ -51,6 +51,8 @@ class PostView(ViewSet):
       post.rare_user = rare_user
       post.save()
       
+      return Response(None, status=status.HTTP_204_NO_CONTENT)
+      
     def destroy(self, request, pk):
       post = Post.objects.get(pk=pk)
       post.delete()
