@@ -43,11 +43,17 @@ class CommentView(ViewSet):
 
               
     def update(self, request, pk):
-      comment = Comment.objects.get(pk=pk)
-      serializer = CommentSerializer(comment, data=request.data)
-      if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        try:
+            comment = Comment.objects.get(pk=pk)
+        except Comment.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = CommentSerializer(comment, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
           
     def destroy(self, request, pk):
         comment = Comment.objects.filter(pk=pk).first()
