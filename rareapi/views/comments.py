@@ -67,7 +67,11 @@ class CommentView(ViewSet):
           
 class CommentSerializer(serializers.ModelSerializer):
     author = UserSerializer()
+    username = serializers.SerializerMethodField()
+
+    def get_username(self, obj):
+        return f"{obj.author.first_name} {obj.author.last_name}"
 
     class Meta:
         model = Comment
-        fields = ['id', 'author', 'post', 'content', 'created_on']
+        fields = ['id', 'author', 'post', 'content', 'created_on', 'username']
