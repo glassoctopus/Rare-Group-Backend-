@@ -9,7 +9,7 @@ class User(models.Model):
     profile_image_url = models.CharField(max_length=666)
     email = models.CharField(max_length=100)
     created_on = models.DateField(default=datetime.date(2024, 6, 11))
-    active = models.IntegerField(default=0)
+    active = models.IntegerField(default=1)
     is_staff = models.BooleanField(default=False)
     uid = models.CharField(max_length=69)
 

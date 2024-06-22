@@ -10,12 +10,13 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'bio', 'profile_image_url', 'email', 'created_on', 'active', 'is_staff', 'uid')
+        fields = ('first_name', 'last_name', 'bio', 'profile_image_url', 'email', 'created_on', 'active', 'is_staff', 'uid', 'id')
 
 def get_current_date_formatted():
     """helper time/date stamp"""
     current_date = timezone.now().date()
     return current_date.strftime('%Y-%m-%d')
+
 class UserView(ViewSet):
     """User View for simple social full stack app"""
     
@@ -26,7 +27,7 @@ class UserView(ViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def list(self, request):
-        """Get all Artist, get all artist by genre"""
+        """Get all Users"""
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -48,21 +49,31 @@ class UserView(ViewSet):
         serializer = UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-    def update(self, request, pk):
+    def update(self, request, pk=None):
         """PUT / Update a User"""
-        user = User.objects.get(pk=pk)
-        user.first_name = request.data["first_name"]
-        user.last_name = request.data["last_name"]
-        user.bio = request.data["bio"]
-        user.profile_image_url = request.data["profile_image_url"]
-        user.is_staff=request.data["is_staff"]
-        user.email=request.data["email"]
-        user.save()
-        
-        serializer = UserSerializer(user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        try:
+            user = User.objects.get(pk=pk)
+            data = request.data
+
+            # Debug: print request data
+            print("Request data:", data)
+
+            # Update fields if present in request data
+            user.first_name = data.get("first_name", user.first_name)
+            user.last_name = data.get("last_name", user.last_name)
+            user.bio = data.get("bio", user.bio)
+            user.profile_image_url = data.get("profile_image_url", user.profile_image_url)
+            user.email = data.get("email", user.email)
+            user.active = data.get("active", user.active)
+            user.is_staff = data.get("is_staff", user.is_staff)
+
+            user.save()
+            return Response(status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
     
     def destroy(self, request, pk):
+        """DELETE / Delete a User"""
         user = User.objects.get(pk=pk)
         user.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
